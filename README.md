@@ -8,61 +8,71 @@ This project explores electric vehicle (EV) registrations and public charging in
 
 The aim was to understand how EV registrations have changed over time, identify states leading in EV adoption, and compare registration patterns with the distribution of public charging stations.
 
-The analysis covers eight business-oriented questions using state-level registration data from 2021–2025 and a 2025 charging infrastructure snapshot.
+The analysis covers eight questions using state-level EV registration data from 2021–2025 and a 2025 charging infrastructure snapshot.
 
 ## Tools & SQL Skills
 
 - **Database:** MySQL
-- **Data Analysis:** SQL
-- **Techniques:** JOINs, CTEs, GROUP BY, CASE WHEN, aggregate functions, window functions (`LAG()`), percentage calculations
-- **Database Design:** Primary keys and constraints
-
-## Key Findings
-
-- EV registrations increased from approximately **3.3 lakh in 2021 to 21.8 lakh in 2025**.
-- Uttar Pradesh recorded the highest EV registrations in 2025.
-- West Bengal recorded the largest absolute increase in registrations between 2024 and 2025.
-- Tripura had the highest EV share of new vehicle registrations at **18.35%**.
-- Karnataka recorded the highest number of public charging stations in the analyzed data, although only **12.32%** were classified as fast charging stations.
-- Registration volumes and EV registration shares varied considerably across states.
+- **Techniques:** `JOIN`, `GROUP BY`, common table expressions (CTEs), `CASE WHEN`, aggregate functions, the `LAG()` window function, and percentage calculations
+- **Database design:** Primary keys and constraints
 
 ## Analysis Covered
 
 1. Annual EV registration trends (2021–2025)
-2. Top 10 states by EV registrations
-3. Year-over-year registration growth
-4. State-wise growth between 2024 and 2025
-5. EV share of total vehicle registrations
-6. Public charging infrastructure and fast charging share
+2. Top 10 states by EV registrations in 2025
+3. Year-over-year growth in registrations
+4. State-wise registration changes from 2024 to 2025
+5. EV share of total vehicle registrations by state
+6. Public charging stations and fast-charging share
 7. EV registrations per public charging station
-8. Fast-charging comparison among leading EV states
+8. Fast-charging share among the top 10 EV-registration states
+
+## Key Findings
+
+*The figures below are reported in the project presentation and have not been independently reproduced from raw data in this repository.*
+
+- EV registrations increased from approximately **3.3 lakh in 2021 to 21.8 lakh in 2025**.
+- **Uttar Pradesh** recorded the highest EV registrations in 2025.
+- **West Bengal** recorded the largest absolute increase in registrations between 2024 and 2025.
+- **Tripura** had the highest EV share of new vehicle registrations at **18.35%**.
+- **Karnataka** had the most public charging stations in the analyzed snapshot, although only **12.32%** were classified as fast-charging stations.
+- Registration volumes, EV shares, and charging-station availability varied across states.
 
 ## Database Structure
 
-The analysis uses three tables:
+The project uses three tables:
 
 | Table | Description |
 |---|---|
-| `ev_registrations` | State-level EV registrations |
-| `all_fuel_registrations` | Vehicle registrations across fuel types |
-| `charging_stations` | State-level public charging infrastructure |
+| `ev_registrations` | State-wise, monthly EV registration records |
+| `all_fuel_registrations` | State-wise vehicle registrations across fuel types |
+| `charging_stations` | State-wise public charging-station counts and snapshot dates |
 
-## Repository Structure
+## Repository Files
 
-- `sql/` — Database schema and analytical SQL queries
-- `data/` — Dataset documentation and source information
-- `presentation/` — Project presentation containing queries, results, and findings
+| File | Contents |
+|---|---|
+| [SQL analysis script](sql/india_ev_analysis_queries.sql) | Database schema and all eight analytical queries in one `.sql` file |
+| [SQL documentation](sql/README.md) | Query overview and instructions for using the SQL script |
+| [Dataset documentation](data/README.md) | Dataset descriptions, coverage, and missing source details |
+| [Project presentation (PDF)](presentation/India_EV_Infra_SQL_Portfolio.pdf) | 13-slide overview with queries, results, and findings |
+| [Presentation notes](presentation/README.md) | Context and interpretation notes for the PDF |
 
-## Data Sources
+## Data Sources & Reproducibility
 
-Original data-source links, reporting coverage, and charging infrastructure snapshot dates are to be confirmed in `data/README.md`.
+The repository currently **does not include the source datasets or data-import instructions**. The original data-source URLs, precise charging-station snapshot date, and full reporting coverage have not yet been confirmed.
+
+See [Dataset Information](data/README.md) for the current documentation status. To reproduce the results, the underlying data must first be loaded into the tables defined in the SQL script.
 
 ## Limitations
 
-The analysis uses registration data and a charging infrastructure snapshot. EV registrations per public charging station provide a comparative indicator, not a direct measure of station utilization, demand, or infrastructure shortages.
+- EV registrations measure new registrations during the reporting period, not the total number of EVs in operation.
+- Registrations per public charging station are a comparative indicator, **not** a direct measure of charging-station utilization, demand, or infrastructure shortages.
+- The charging-station queries in the uploaded SQL script do not filter on `snapshot_date`; their interpretation depends on the snapshot data loaded into the table.
+- Without the underlying datasets, the reported output values cannot be independently validated from this repository alone.
 
 ## What I Learned
 
-This project helped me apply SQL concepts to real analytical questions, particularly year-over-year growth calculations, state-level comparisons, and combining datasets to explore patterns.
+This project helped me use SQL to explore trends, calculate year-over-year growth, compare states, and connect registration patterns with charging infrastructure data.
 
-It reinforced the importance of looking beyond absolute numbers when interpreting data.
+It also reinforced why looking beyond absolute registration counts matters: EV share and charging-station distribution can tell a different story from registration volume alone.
