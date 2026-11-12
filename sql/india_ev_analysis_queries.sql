@@ -149,8 +149,31 @@ SELECT
     AS fast_charger_percentage
 FROM charging_stations
 ORDER BY stations_total DESC;
+-- 7.Which states had the highest number of 2025 EV registrations 	per public charging station?
 
--- 8. . Among the top 10 EV states in 2025, which had the lowest 	share of fast chargers?
+WITH ev_2025 AS (
+    SELECT
+        state,
+        SUM(registrations) AS ev_registrations_2025
+    FROM ev_registrations
+    WHERE year = 2025
+    GROUP BY state
+)
+
+SELECT
+    e.state,
+    e.ev_registrations_2025,
+    c.stations_total,
+    ROUND(
+        e.ev_registrations_2025 / c.stations_total,
+        2
+    ) AS registrations_per_station
+FROM ev_2025 e
+JOIN charging_stations c
+    ON e.state = c.state
+ORDER BY registrations_per_station DESC;
+
+-- 8. Among the top 10 EV states in 2025, which had the lowest share of fast chargers?
 WITH top_states AS (
     SELECT state,
 	SUM(registrations) AS ev_registrations_2025
